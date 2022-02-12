@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,16 +8,69 @@
     <link rel="stylesheet" href="./css/main.min.css">
     <title>starter</title>
 </head>
+
 <body>
 
     <!-- HEADER -->
     <header class="header">
+        <div class="container">
+            <!-- HEADER TOP -->
+            <div class="d-flex flex-row align-items-center justify-content-center header-top">
+                <img class="header-top__logo" src="./images/bookshelter.svg" alt="logo" width="226" height="44">
+                <div class="px-3 border border-secondary d-flex header-top__search">
+                    <img class="me-2 header-top__search-icon" src="./images/search.svg" alt="search" width="19"
+                        height="18">
+                    <input type="text" name="books__name" autocomplete="off" placeholder="Search books"
+                        class="border-0 w-100 py-2 bg-transparent search-input">
+                </div>
+                <img class="header-top__icon" src="./images/sun.svg" alt="icon" width="23" height="23">
+                <button class="btn btn-primary logout">Logout</button>
+            </div>
+        </div>
 
+        <!-- HEADER BOTTOM -->
+        <section class="header__bottom-section">
+            <div class="container header-bottom">
+                <dir class="d-flex flex-row align-items-center header-bottom__wrapper">
+                    <p class="p-0 d-inline-block books-result">
+                        Showing 18 Result(s)
+                    </p>
+                    <button class="btn btn-secondary d-flex flex-row align-items-center order-newest" type="submit">
+                        <img class="me-1 order-newest__icon" src="./images/calendar.svg" alt="icon" width="24"
+                            height="24">
+                        <p class="p-0 m-0 order-newest__desc">Order by newest</p>
+                    </button>
+                </dir>
+            </div>
+        </section>
     </header>
 
     <!-- MAIN -->
-    <main class="main">
-
+    <main class="main-index">
+        <section class="hero">
+            <div class="container hero__container">
+                <div class="m-0 p-0 pt-4 pe-4 bookmarks">
+                    <h2 class="m-0 mb-1 p-0 text-black bookmarks__heading">
+                        Bookmarks
+                    </h2>
+                    <p class="m-0 mb-4 p-0 text-black bookmarks__desc">
+                        If you don’t like to read, you haven’t found the right book
+                    </p>
+                    <ul class="m-0 p-0 d-flex flex-column bookmark-list">
+                        <li class="bookmark-list__item">
+                            <div class="bookmark-list__left">
+                                <h4 class="bookmark-list__heading">
+                                    Python
+                                </h4>
+                                <p class="bookmark-list__desc">
+                                    David M. Beazley
+                                </p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
     </main>
 
     <!-- FOOTER -->
@@ -30,4 +84,5 @@
     <script src="./js/script.js"></script>
 
 </body>
+
 </html>

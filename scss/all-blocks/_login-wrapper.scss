@@ -1,0 +1,36 @@
+.login-body {
+  flex-grow: 1;
+  background-image: url("../images/Login.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.login__wrapper {
+  margin: 0;
+  padding: 200px 10%;
+}
+
+.login-form {
+  width: 100%;
+  max-width: 300px;
+
+  &__email:focus {
+    outline: none;
+    box-shadow: none;
+    border: 1px solid #ccc;
+  }
+
+  &__password:focus {
+    outline: none;
+    box-shadow: none;
+    border: 1px solid #ccc;
+  }
+
+  &__forgot-password {
+    width: 150px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+  }
+}

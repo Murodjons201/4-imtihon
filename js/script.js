@@ -17,6 +17,7 @@ const elNextBtn = document.querySelector(".next-btn");
 const elReadBtn = document.querySelector(".books-list__read");
 const elMoreInfo = document.querySelector(".books-more-info");
 const elOverlay = document.querySelector(".overlay");
+const elPaginationList = document.querySelector(".pagination");
 
 let orderByNewest = "";
 let search = "python";
@@ -390,8 +391,18 @@ const getBooks = async function () {
     elBooksList.innerHTML = null;
     elErrorBooks.textContent = null;
 
+    page === 1 ? (elPrevBtn.disabled = true) : (elPrevBtn.disabled = false);
+
+    page === data.totalItems
+      ? (elNextBtn.disabled = true)
+      : (elNextBtn.disabled = false);
+
+    elPaginationList.innerHTML = null;
+
     renderBooks(data.items, elBooksList, data);
     renderBooksbookmark(data.items);
+
+    ///////////// wu funksiyaga bir qarab bering!!///////////////
     // booksMoreInfo(data.items);
   } catch (err) {
     elBooksList.innerHTML = null;
@@ -416,17 +427,17 @@ elOrderNewest.addEventListener("click", function (evt) {
 });
 
 //PAGENATION:
-// elPrevBtn.addEventListener("click", function () {
-//   if (page >= 11) {
-//     page = page - 10;
-//     elPrevBtn.disabled = false;
-//     getBooks();
-//   } else {
-//     elPrevBtn.disabled = true;
-//   }
-// });
+elPrevBtn.addEventListener("click", function () {
+  if (page >= 11) {
+    page = page - 10;
+    elPrevBtn.disabled = false;
+    getBooks();
+  } else {
+    elPrevBtn.disabled = true;
+  }
+});
 
-// elNextBtn.addEventListener("click", function () {
-//   page = page + 10;
-//   getBooks();
-// });
+elNextBtn.addEventListener("click", function () {
+  page = page + 10;
+  getBooks();
+});

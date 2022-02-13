@@ -15,6 +15,8 @@ const elErrorBooks = document.querySelector(".error-books");
 const elPrevBtn = document.querySelector(".prev-btn");
 const elNextBtn = document.querySelector(".next-btn");
 const elReadBtn = document.querySelector(".books-list__read");
+const elMoreInfo = document.querySelector(".books-more-info");
+const elOverlay = document.querySelector(".overlay");
 
 let orderByNewest = "";
 let search = "python";
@@ -27,7 +29,15 @@ elLogout.addEventListener("click", function (evt) {
   window.location.replace("login.html");
 });
 
-const bookmarks = [];
+//OVERLAY
+elOverlay.addEventListener("click", () => {
+  elMoreInfo.classList.add("hidden");
+  elOverlay.classList.add("hidden");
+});
+
+let localBookmarks = JSON.parse(window.localStorage.getItem("localBookmark"));
+
+const bookmarks = localBookmarks || [];
 
 //RENDERBOOKMARKS:
 const renderBookmarks = function (arr, element) {
@@ -93,6 +103,16 @@ elBookmarksList.addEventListener("click", function (evt) {
 
     elBookmarksList.innerHTML = null;
 
+    window.localStorage.setItem("localBookmark", JSON.stringify(bookmarks));
+
+    let localStorageremove = JSON.parse(
+      window.localStorage.getItem("localBookmark")
+    );
+
+    if (localStorageremove.length === 0) {
+      window.localStorage.removeItem("localBookmark");
+    }
+
     renderBookmarks(bookmarks, elBookmarksList);
   }
 });
@@ -109,9 +129,202 @@ const renderBooksbookmark = function (arr) {
         bookmarks.push(foundBooks);
 
         elBookmarksList.innerHTML = null;
+
+        window.localStorage.setItem("LocalBookmark", JSON.stringify(bookmarks));
         renderBookmarks(bookmarks, elBookmarksList);
       }
     }
+
+    const isBookmarkBtnIdInfo = evt.target.matches(".books-list__info");
+    if (isBookmarkBtnIdInfo) {
+      elMoreInfo.classList.remove("hidden");
+      elOverlay.classList.remove("hidden");
+    }
+  });
+};
+
+//BOOKS INFORMATION:
+const booksMoreInfo = function (arr) {
+  arr.forEach((bookInfo) => {
+    //CREATE ELEMENT:
+    let newBooksMoreInfoWrapper = document.querySelector("div");
+    let newBooksMoreInfoTop = document.querySelector("div");
+    let newBooksMoreInfoTitle = document.querySelector("h3");
+    let newBooksMoreInfoCancel = document.querySelector("button");
+    let newBooksMoreInfoList = document.querySelector("ul");
+    let newBooksMoreInfoItem = document.querySelector("li");
+    let newBooksMoreInfoImg = document.querySelector("img");
+    let newBooksMoreInfoInfor = document.querySelector("p");
+    let newBooksMoreInfoOuthorWrapper = document.querySelector("div");
+    let newBooksMoreInfoOuthorTitle = document.querySelector("p");
+    let newBooksMoreInfoOuthors = document.querySelector("ul");
+
+    //OUTHORS:
+    bookInfo.volumeInfo.authors.forEach((author) => {
+      //CREATE ELEMENT:
+      let newBooksMoreInfoOuthorsHead = document.querySelector("li");
+
+      //SETATTRIBUT:
+      newBooksMoreInfoOuthorsHead.setAttribute(
+        "class",
+        "books-more-info__authors-head"
+      );
+
+      //TEXTCONTENT:
+      newBooksMoreInfoOuthorsHead.textContent = author;
+
+      //appendChild:
+      newBooksMoreInfoOuthors.appendChild(newBooksMoreInfoOuthorsHead);
+    });
+
+    let newBooksMoreInfoPublishedWrapper = document.querySelector("div");
+    let newBooksMoreInfoPublishedTitle = document.querySelector("p");
+    let newBooksMoreInfoPublishedHead = document.querySelector("p");
+    let newBooksMoreInfoPublishersWrapper = document.querySelector("div");
+    let newBooksMoreInfoPublishersTitle = document.querySelector("p");
+    let newBooksMoreInfoPublishersHead = document.querySelector("p");
+    let newBooksMoreInfoCategoriesWrapper = document.querySelector("div");
+    let newBooksMoreInfoCategoriesTitle = document.querySelector("p");
+    let newBooksMoreInfoCategoriesHead = document.querySelector("p");
+    let newBooksMoreInfoPagescountWrapper = document.querySelector("div");
+    let newBooksMoreInfoPagescountTitle = document.querySelector("p");
+    let newBooksMoreInfoPagescountHead = document.querySelector("p");
+    let newBooksMoreInfoBottom = document.querySelector("div");
+    let newBooksMoreInfoRead = document.querySelector("a");
+
+    //SETATRIBUTE:
+    newBooksMoreInfoWrapper.setAttribute("class", "books-more-info__wrapper");
+    newBooksMoreInfoTop.setAttribute("class", "books-more-info__top");
+    newBooksMoreInfoTitle.setAttribute("class", "books-more-info__title");
+    newBooksMoreInfoCancel.setAttribute("class", "books-more-info__cancel");
+    newBooksMoreInfoList.setAttribute("class", "books-more-info__list");
+    newBooksMoreInfoItem.setAttribute("class", "books-more-info__item");
+    newBooksMoreInfoImg.setAttribute("class", "books-more-info__img");
+    newBooksMoreInfoImg.setAttribute(
+      "src",
+      bookInfo.volumeInfo.imageLinks?.thumbnail
+    );
+
+    newBooksMoreInfoInfor.setAttribute("class", "books-more-info__infor");
+    newBooksMoreInfoOuthorWrapper.setAttribute(
+      "class",
+      "books-more-info__outhor-wrapper"
+    );
+    newBooksMoreInfoOuthorTitle.setAttribute(
+      "class",
+      "books-more-info__outhor-title"
+    );
+    newBooksMoreInfoOuthors.setAttribute("class", "books-more-info__authors");
+    newBooksMoreInfoPublishedWrapper.setAttribute(
+      "class",
+      "books-more-info__published-wrapper"
+    );
+    newBooksMoreInfoPublishedTitle.setAttribute(
+      "class",
+      "books-more-info__published-title"
+    );
+    newBooksMoreInfoPublishedHead.setAttribute(
+      "class",
+      "books-more-info__published-head"
+    );
+    newBooksMoreInfoPublishersWrapper.setAttribute(
+      "class",
+      "books-more-info__publishers-wrapper"
+    );
+    newBooksMoreInfoPublishersTitle.setAttribute(
+      "class",
+      "books-more-info__publishers-title"
+    );
+    newBooksMoreInfoPublishersHead.setAttribute(
+      "class",
+      "books-more-info__publishers-head"
+    );
+    newBooksMoreInfoCategoriesWrapper.setAttribute(
+      "class",
+      "books-more-info__categories-wrapper"
+    );
+    newBooksMoreInfoCategoriesTitle.setAttribute(
+      "class",
+      "books-more-info__categories-title"
+    );
+    newBooksMoreInfoCategoriesHead.setAttribute(
+      "class",
+      "books-more-info__categories-head"
+    );
+    newBooksMoreInfoPagescountWrapper.setAttribute(
+      "class",
+      "books-more-info__pagescount-wrapper"
+    );
+    newBooksMoreInfoPagescountTitle.setAttribute(
+      "class",
+      "books-more-info__pagescount-title"
+    );
+    newBooksMoreInfoPagescountHead.setAttribute(
+      "class",
+      "books-more-info__pagescount-head"
+    );
+    newBooksMoreInfoBottom.setAttribute("class", "books-more-info__bottom");
+    newBooksMoreInfoRead.setAttribute("class", "books-more-info__read");
+    newBooksMoreInfoRead.setAttribute("href", bookInfo.volumeInfo?.previewLink);
+    newBooksMoreInfoRead.setAttribute("target", "_blank");
+    console.log(bookInfo.volumeInfo?.publisher);
+
+    // //TEXTCONTENT:
+    newBooksMoreInfoTitle.textContent = bookInfo.volumeInfo?.title;
+    newBooksMoreInfoInfor.textContent = bookInfo.volumeInfo?.description;
+    newBooksMoreInfoOuthorTitle.textContent = "Author:";
+    newBooksMoreInfoPublishedTitle.textContent = "Published:";
+    newBooksMoreInfoPublishedHead.textContent =
+      bookInfo.volumeInfo?.publishedDate;
+    newBooksMoreInfoPublishersTitle.textContent = "Publishers:";
+    newBooksMoreInfoPublishersHead.textContent = bookInfo.volumeInfo?.publisher;
+    newBooksMoreInfoCategoriesTitle.textContent = "Categories:";
+    newBooksMoreInfoCategoriesHead.textContent =
+      bookInfo.volumeInfo?.categories;
+    newBooksMoreInfoPagescountTitle.textContent = "Pages Count:";
+    newBooksMoreInfoPagescountHead.textContent = bookInfo.volumeInfo?.pageCount;
+    newBooksMoreInfoRead.textContent = "Read";
+
+    //APPENDCHILD:
+    elMoreInfo.appendChild(newBooksMoreInfoWrapper);
+    newBooksMoreInfoWrapper.appendChild(newBooksMoreInfoTop);
+    newBooksMoreInfoTop.appendChild(newBooksMoreInfoTitle);
+    newBooksMoreInfoTop.appendChild(newBooksMoreInfoCancel);
+    newBooksMoreInfoWrapper.appendChild(newBooksMoreInfoList);
+    newBooksMoreInfoList.appendChild(newBooksMoreInfoItem);
+    newBooksMoreInfoItem.appendChild(newBooksMoreInfoImg);
+    newBooksMoreInfoItem.appendChild(newBooksMoreInfoInfor);
+    newBooksMoreInfoItem.appendChild(newBooksMoreInfoOuthorWrapper);
+    newBooksMoreInfoOuthorWrapper.appendChild(newBooksMoreInfoOuthorTitle);
+    newBooksMoreInfoOuthorWrapper.appendChild(newBooksMoreInfoOuthors);
+    newBooksMoreInfoItem.appendChild(newBooksMoreInfoPublishedWrapper);
+    newBooksMoreInfoPublishedWrapper.appendChild(
+      newBooksMoreInfoPublishedTitle
+    );
+    newBooksMoreInfoPublishedWrapper.appendChild(newBooksMoreInfoPublishedHead);
+    newBooksMoreInfoItem.appendChild(newBooksMoreInfoPublishersWrapper);
+    newBooksMoreInfoPublishersWrapper.appendChild(
+      newBooksMoreInfoPublishersTitle
+    );
+    newBooksMoreInfoPublishersWrapper.appendChild(
+      newBooksMoreInfoPublishersHead
+    );
+    newBooksMoreInfoItem.appendChild(newBooksMoreInfoCategoriesWrapper);
+    newBooksMoreInfoCategoriesWrapper.appendChild(
+      newBooksMoreInfoCategoriesTitle
+    );
+    newBooksMoreInfoCategoriesWrapper.appendChild(
+      newBooksMoreInfoCategoriesHead
+    );
+    newBooksMoreInfoItem.appendChild(newBooksMoreInfoPagescountWrapper);
+    newBooksMoreInfoPagescountWrapper.appendChild(
+      newBooksMoreInfoPagescountTitle
+    );
+    newBooksMoreInfoPagescountWrapper.appendChild(
+      newBooksMoreInfoPagescountHead
+    );
+    newBooksMoreInfoWrapper.appendChild(newBooksMoreInfoBottom);
+    newBooksMoreInfoBottom.appendChild(newBooksMoreInfoRead);
   });
 };
 
@@ -147,6 +360,10 @@ const renderBooks = function (arr, element, total) {
       ).bookmarkBtnIdData = `${item.id}`;
 
       clonedBoksTemplate.querySelector(
+        ".books-list__info"
+      ).bookmarkBtnIdInfo = `${item.id}`;
+
+      clonedBoksTemplate.querySelector(
         ".books-list__read"
       ).href = `${item.volumeInfo?.previewLink}`;
 
@@ -175,6 +392,7 @@ const getBooks = async function () {
 
     renderBooks(data.items, elBooksList, data);
     renderBooksbookmark(data.items);
+    // booksMoreInfo(data.items);
   } catch (err) {
     elBooksList.innerHTML = null;
     elErrorBooks.textContent = "Xatolik yuz berdi!!!";
